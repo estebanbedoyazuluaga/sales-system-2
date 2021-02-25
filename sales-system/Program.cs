@@ -25,26 +25,37 @@ namespace sales_system
                 Sales[i] = new Sale(Products[i], Sellers[i], "-");
             }
 
-            //calculating total and printing to the console
+            //processing today's sales
             double total = 0;
+            string cheapest_product_seller = "";
+            double cheapest_product_price = 0.0;
+            
             for (int i = 0; i < Sales.Length; i++)
             {
+                //this keeps track of who sold the cheapest product.
+                if (i == 0)
+                {
+                    cheapest_product_price = Sales[i].GetProduct().GetPrice();
+                    cheapest_product_seller = Sales[i].GetSeller().GetName();
+                }
+                else if (Sales[i].GetProduct().GetPrice() < cheapest_product_price)
+                {
+                    cheapest_product_price = Sales[i].GetProduct().GetPrice();
+                    cheapest_product_seller = Sales[i].GetSeller().GetName();
+                }
+
+                //add up to total and print product
                 total += Sales[i].GetProduct().GetPrice();
-                PrintProductPrice(Sales[i]);
+
+                //-----------------{tab}----------------[product name]---------------------[product price]
+                Console.WriteLine($"\t{Sales[i].GetProduct().GetName()} ${Sales[i].GetProduct().GetPrice()}");
             }
 
-            Console.WriteLine("Total: " + Math.Round(total,2));
+            double average_product_price = total / Sales.Length;
+            Console.WriteLine("Total: " + Math.Round(total, 2));
+            Console.WriteLine($"{cheapest_product_seller} sold the cheapest item.");
+            Console.WriteLine($"${Math.Round(average_product_price, 2)} is today's average product price.");
 
-        }
-
-        public static void PrintProductPrice(Sale Sale)
-        {
-            Console.WriteLine($"\t{Sale.GetProduct().GetName()} ${Sale.GetProduct().GetPrice()}");
-            
-            ////More info:
-            //Console.WriteLine($"\t{Sale.GetSeller().GetName()} " +
-            //                  $"sold {Sale.GetProduct().GetName()} " +
-            //                  $"for ${Sale.GetProduct().GetPrice()}" );
         }
     }
 }

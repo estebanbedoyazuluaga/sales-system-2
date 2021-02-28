@@ -8,11 +8,18 @@ namespace sales_system
     {
         private string Name;
         private double Price;
+        private string Code;
 
-        public Product (string Name, double Price)
+        public Product (string Name, double Price, string Code)
         {
             this.Name = Name;
             this.Price = Price;
+            this.Code = Code;
+        }
+        public Product()
+        {
+            this.Name = "";
+            this.Price = 0;
         }
 
         public string GetName()
@@ -30,6 +37,14 @@ namespace sales_system
         public void SetPrice(double Price)
         {
             this.Price = Price;
+        }
+        public String GetCode()
+        {
+            return this.Code;
+        }
+        public void SetCode(string Code)
+        {
+            this.Code = Code;
         }
     }
 }
